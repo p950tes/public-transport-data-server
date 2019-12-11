@@ -4,8 +4,6 @@ import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 
-import se.p950tes.publictransport.app.Test;
-
 public class FileDataSource implements DataSource {
 
 	private String filePath;
@@ -16,7 +14,7 @@ public class FileDataSource implements DataSource {
 	
 	@Override
 	public String fetchData() throws Exception {
-		URL fileUrl = Test.class.getResource(filePath);
+		URL fileUrl = FileDataSource.class.getResource(filePath);
 		
 		return IOUtils.toString(fileUrl.openStream(), "UTF-8");
 	}
