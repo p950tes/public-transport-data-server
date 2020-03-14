@@ -1,8 +1,8 @@
-package se.p950tes.publictransport.app.repository.parsing.ultypes;
+package se.p950tes.publictransport.app.repository.type;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ULLine {
+public class LineDO {
 
 	@SerializedName("lineNo")
 	private Integer lineNo;

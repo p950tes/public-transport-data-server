@@ -1,28 +1,47 @@
 package se.p950tes.publictransport.app.web.service;
 
-import se.p950tes.publictransport.app.repository.DeparturesRetriever;
-import se.p950tes.publictransport.app.repository.parsing.ultypes.ULDeparture;
-import se.p950tes.publictransport.app.repository.parsing.ultypes.ULDeparturesResponse;
+import java.util.LinkedList;
+import java.util.List;
+
+import se.p950tes.publictransport.app.exception.NotFoundException;
+import se.p950tes.publictransport.app.exception.UnknownULException;
+import se.p950tes.publictransport.app.repository.adapter.FetchDeparturesAdapter;
+import se.p950tes.publictransport.app.repository.type.DepartureDO;
+import se.p950tes.publictransport.app.repository.type.DeparturesResponseDO;
+import se.p950tes.publictransport.app.repository.type.PayloadResponseDO;
 import se.p950tes.publictransport.app.web.response.Departure;
-import se.p950tes.publictransport.app.web.response.DeparturesResponse;
 
 public class FetchDeparturesService {
 
-	public DeparturesResponse fetchDepartures(int stopId) throws Exception {
-		ULDeparturesResponse data = new DeparturesRetriever().fetch(stopId);
+	private static final int RESPONSE_CODE_NOT_FOUND = 20320;
+	
+	public List<Departure> fetchDepartures(int stopId) throws Exception {
+		PayloadResponseDO<DeparturesResponseDO> data = new FetchDeparturesAdapter().fetch(stopId);
 		
-		return createResponse(data);
+		validateResponse(stopId, data);
+		
+		return createResponse(data.getParsedPayload());
 	}
-
-	private DeparturesResponse createResponse(ULDeparturesResponse data) {
-		DeparturesResponse response = new DeparturesResponse();
-		for (ULDeparture departure : data.getDepartures()) {
-			response.addDeparture(createDeparture(departure));
+	
+	private void validateResponse(int busStopId, PayloadResponseDO<DeparturesResponseDO> data) {
+		int statusCode = data.getStatusCode();
+		if (statusCode == RESPONSE_CODE_NOT_FOUND) {
+			throw new NotFoundException("Bus stop with ID " + busStopId + " not found");
 		}
-		return response;
+		if (statusCode != 0) {
+			throw new UnknownULException("UL returned unknown status code " + statusCode + " for bus stop " + busStopId);
+		}
 	}
 
-	private Departure createDeparture(ULDeparture ulDeparture) {
+	private List<Departure> createResponse(DeparturesResponseDO departuresDO) {
+		List<Departure> departures = new LinkedList<>();
+		for (DepartureDO departure : departuresDO.getDepartures()) {
+			departures.add(createDeparture(departure));
+		}
+		return departures;
+	}
+
+	private Departure createDeparture(DepartureDO ulDeparture) {
 		Departure departure = new Departure();
 		departure.setLine(ulDeparture.getLine().getName());
 		departure.setStopAreaId(ulDeparture.getAreaId());

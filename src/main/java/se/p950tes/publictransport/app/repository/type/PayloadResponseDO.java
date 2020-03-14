@@ -1,8 +1,11 @@
-package se.p950tes.publictransport.app.repository.parsing.ultypes;
+package se.p950tes.publictransport.app.repository.type;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ULResponse {
+/**
+ * @param <P> Payload type
+ */
+public class PayloadResponseDO<P> {
 
 	@SerializedName("StatusCode")
 	private int statusCode;
@@ -13,6 +16,8 @@ public class ULResponse {
 	@SerializedName("Payload")
 	private String payload;
 
+	private transient P parsedPayload; 
+	
 	public int getStatusCode() {
 		return statusCode;
 	}
@@ -35,5 +40,13 @@ public class ULResponse {
 
 	public void setPayload(String payload) {
 		this.payload = payload;
+	}
+
+	public P getParsedPayload() {
+		return parsedPayload;
+	}
+
+	public void setParsedPayload(P parsedPayload) {
+		this.parsedPayload = parsedPayload;
 	}
 }

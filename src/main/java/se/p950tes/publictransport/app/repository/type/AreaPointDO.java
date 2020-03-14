@@ -1,19 +1,19 @@
-package se.p950tes.publictransport.app.repository.parsing.ultypes;
+package se.p950tes.publictransport.app.repository.type;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ULAreaPoint {
+public class AreaPointDO {
 
 	@SerializedName("area")
 	private String area;
 	
 	@SerializedName("coordinate")
-	private ULCoordinates coordinate;
+	private CoordinateDO coordinate;
 	
-	public ULCoordinates getCoordinate() {
+	public CoordinateDO getCoordinate() {
 		return coordinate;
 	}
-	public void setCoordinate(ULCoordinates coordinate) {
+	public void setCoordinate(CoordinateDO coordinate) {
 		this.coordinate = coordinate;
 	}
 	public String getArea() {

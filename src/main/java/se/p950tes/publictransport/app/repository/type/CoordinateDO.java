@@ -1,8 +1,8 @@
-package se.p950tes.publictransport.app.repository.parsing.ultypes;
+package se.p950tes.publictransport.app.repository.type;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ULCoordinates {
+public class CoordinateDO {
 
 	@SerializedName("longitude")
 	private Double longitude;

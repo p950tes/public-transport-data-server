@@ -1,4 +1,4 @@
-package se.p950tes.publictransport.app.repository.parsing.ultypes;
+package se.p950tes.publictransport.app.repository.type;
 
 import java.time.LocalTime;
 
@@ -7,13 +7,13 @@ import com.google.gson.annotations.SerializedName;
 
 import se.p950tes.publictransport.app.repository.parsing.LocalTimeAdapter;
 
-public class ULDeparture {
+public class DepartureDO {
 
 	@SerializedName("area")
 	private String areaId;
 	
 	@SerializedName("coordinate")
-	private ULCoordinates coordinates;
+	private CoordinateDO coordinates;
 	
 	@SerializedName("nextDepartureTime")
 	@JsonAdapter(LocalTimeAdapter.class)
@@ -23,7 +23,7 @@ public class ULDeparture {
 	private int nextDepartureInMinutes;
 	
 	@SerializedName("line")
-	private ULLine line;
+	private LineDO line;
 	
 	public String getAreaId() {
 		return areaId;
@@ -31,10 +31,10 @@ public class ULDeparture {
 	public void setAreaId(String area) {
 		this.areaId = area;
 	}
-	public ULCoordinates getCoordinates() {
+	public CoordinateDO getCoordinates() {
 		return coordinates;
 	}
-	public void setCoordinates(ULCoordinates coordinate) {
+	public void setCoordinates(CoordinateDO coordinate) {
 		this.coordinates = coordinate;
 	}
 	public LocalTime getNextDepartureTime() {
@@ -49,10 +49,10 @@ public class ULDeparture {
 	public void setNextDepartureInMinutes(int nextDepartureIn) {
 		this.nextDepartureInMinutes = nextDepartureIn;
 	}
-	public ULLine getLine() {
+	public LineDO getLine() {
 		return line;
 	}
-	public void setLine(ULLine line) {
+	public void setLine(LineDO line) {
 		this.line = line;
 	}
 	@Override
