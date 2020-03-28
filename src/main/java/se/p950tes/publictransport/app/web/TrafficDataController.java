@@ -24,7 +24,7 @@ public class TrafficDataController {
 	}
 	
 	@RequestMapping(value="/stops", method = RequestMethod.GET)
-	public List<Stop> stops(@RequestParam(name = "q", required = true) String query) throws Exception {
+	public List<Stop> stops(@RequestParam(name = "query", required = true) String query) throws Exception {
 		System.out.println("Query: " + query);
 		return new SearchStopsService().search(query);
 	}
